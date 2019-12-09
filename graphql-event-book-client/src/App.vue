@@ -27,6 +27,8 @@
 
       <v-spacer></v-spacer>
 
+      <v-btn text link to="/events">Events</v-btn>
+
       <v-btn
         href="https://github.com/vuetifyjs/vuetify/releases/latest"
         target="_blank"
@@ -38,23 +40,23 @@
     </v-app-bar>
 
     <v-content>
-      <HelloWorld/>
+      <router-view></router-view>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
-
 export default {
   name: 'App',
 
   components: {
-    HelloWorld
   },
 
   data: () => ({
     //
-  })
+  }),
+  created () {
+    this.$store.dispatch('loadEvents')
+  }
 }
 </script>

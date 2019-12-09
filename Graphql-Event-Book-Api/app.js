@@ -71,6 +71,17 @@ const rootValue = {
     }
 }
 
+//Enabling Cross
+app.use((req,res,next)=>{
+    res.header("Access-Control-Allow-Origin","*");
+    res.header("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    if(req.method === "OPTIONS"){
+        res.header("Access-Control-Allow-Methods","GET, POST,PUT,PATCH,DELETE");
+        return res.status(200).json({});
+    }
+    next();
+})
+
 app.use('/graphql',graphqlHttp({
     schema:schema,
     rootValue:rootValue,
@@ -83,5 +94,6 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PA
     app.listen(port,()=>console.log('server started'));
 })
 .catch(err=>{
+    console.log('Database error')
     console.log(err);
 })
